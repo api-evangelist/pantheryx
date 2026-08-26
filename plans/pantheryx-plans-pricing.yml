@@ -1,0 +1,20 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://pantheryx.com/ (200), https://pantheryx.com/consumer-brands/ (200),
+  https://relesium.com/ (200), https://www.lifesfirstnaturals.com/ (200) - searched for a pricing,
+  plans, or developer-tier page on every PanTheryx host.
+plan_count: 0
+note: >-
+  PanTheryx sells physical nutrition products, not API access. There are no API plans, no usage
+  tiers, no metered quotas and no developer pricing page on any PanTheryx-controlled host; the
+  corporate site has no /pricing page and neither storefront sells anything but consumer goods.
+  The UCP/MCP commerce endpoints are free to call anonymously - what they transact is the retail
+  price of a physical product, which is product pricing rather than an API plan. plan_count is a
+  true zero, not a gap in the search.
+plans: []
+product_pricing_note: >-
+  Retail product prices are available machine-readably from the storefront catalog endpoints
+  (https://relesium.com/products.json returned 1 product; the Life's First Naturals catalog was
+  empty at probe time) and through the UCP search_catalog and get_product tools. They are recorded
+  as commerce data, not as API plans.

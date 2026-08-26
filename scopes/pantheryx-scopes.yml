@@ -1,0 +1,39 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  scopes_supported read verbatim from https://relesium.com/.well-known/oauth-authorization-server
+  and https://www.lifesfirstnaturals.com/.well-known/oauth-authorization-server (both HTTP 200,
+  fetched anonymously 2026-08-26).
+note: >-
+  These are Shopify customer-account scopes exposed by the identity provider behind the two
+  PanTheryx brand storefronts. PanTheryx publishes no scope reference of its own, and there is no
+  provider-authored docs page to enrich these descriptions from — the descriptions below are read
+  from the scope names and the Shopify authorization-server metadata only.
+authorization_servers:
+- host: relesium.com
+  issuer: https://shopify.com/authentication/60191506528
+- host: www.lifesfirstnaturals.com
+  issuer: https://shopify.com/authentication/27073282091
+code_challenge_methods_supported:
+- S256
+scopes:
+- name: openid
+  description: Standard OpenID Connect scope; requests an ID token for the signed-in customer.
+- name: email
+  description: Releases the customer's email address and email_verified claim.
+- name: customer-account-api:full
+  description: Full access to the Shopify Customer Account API for the signed-in customer.
+- name: customer-account-mcp-api:full
+  description: >-
+    Full access to the customer-account MCP API — the authenticated counterpart to the anonymous
+    UCP shopping MCP endpoint, scoped to one signed-in customer's account.
+claims_supported:
+- iss
+- sub
+- aud
+- exp
+- iat
+- nonce
+- sid
+- email
+- email_verified

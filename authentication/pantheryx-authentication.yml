@@ -1,0 +1,75 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  https://relesium.com/.well-known/oauth-authorization-server (200),
+  https://relesium.com/.well-known/oauth-protected-resource (200),
+  https://www.lifesfirstnaturals.com/.well-known/openid-configuration (200), and an anonymous
+  JSON-RPC tools/list POST to each store's /api/ucp/mcp endpoint (200, no credential sent).
+summary: >-
+  PanTheryx publishes no API keys, no developer signup and no authentication documentation of its
+  own. The only authenticated surface on any PanTheryx-controlled host is the Shopify customer
+  account OAuth 2.0 / OpenID Connect provider that fronts the two brand storefronts. Agent
+  discovery on those storefronts is fully anonymous: tools/list, the UCP merchant profile, the
+  catalog JSON endpoints and llms.txt all answer with no token.
+anonymous_surface:
+- surface: MCP tools/list
+  endpoints:
+  - https://relesium.com/api/ucp/mcp
+  - https://www.lifesfirstnaturals.com/api/ucp/mcp
+  credential_required: false
+  observed_status: 200
+- surface: UCP merchant profile
+  endpoints:
+  - https://relesium.com/.well-known/ucp
+  - https://www.lifesfirstnaturals.com/.well-known/ucp
+  credential_required: false
+  observed_status: 200
+schemes:
+- id: shopify_customer_account_oidc
+  type: openIdConnect
+  applies_to: relesium.com
+  issuer: https://shopify.com/authentication/60191506528
+  authorization_endpoint: https://account.relesium.com/authentication/oauth/authorize
+  token_endpoint: https://account.relesium.com/authentication/oauth/token
+  jwks_uri: https://account.relesium.com/authentication/.well-known/jwks.json
+  end_session_endpoint: https://account.relesium.com/authentication/logout
+  response_types_supported:
+  - code
+  token_endpoint_auth_methods_supported:
+  - client_secret_basic
+  - client_secret_post
+  id_token_signing_alg_values_supported:
+  - RS256
+  discovery:
+  - /.well-known/openid-configuration
+  - /.well-known/oauth-authorization-server
+  - /.well-known/oauth-protected-resource
+  note: >-
+    A customer-account identity provider, not a partner/developer API program. It authenticates
+    shoppers, not integrators.
+- id: shopify_customer_account_oidc_lfn
+  type: openIdConnect
+  applies_to: www.lifesfirstnaturals.com
+  issuer: https://shopify.com/authentication/27073282091
+  authorization_endpoint: https://shopify.com/authentication/27073282091/oauth/authorize
+  token_endpoint: https://shopify.com/authentication/27073282091/oauth/token
+  jwks_uri: https://shopify.com/authentication/27073282091/.well-known/jwks.json
+  response_types_supported:
+  - code
+  id_token_signing_alg_values_supported:
+  - RS256
+- id: ucp_payment_instrument
+  type: payment-credential
+  applies_to: checkout completion
+  handlers:
+  - com.google.pay
+  - dev.shopify.card
+  - dev.shopify.shop_pay
+  note: >-
+    complete_checkout is not authenticated with an API key; it carries a payment instrument and,
+    per each store's published llms.txt, requires contemporaneous buyer approval.
+bearer_methods_supported:
+- header
+gaps:
+- No API key issuance, no developer console, no partner authentication documentation.
+- No first-party authentication page exists on pantheryx.com; every document above is Shopify-served.

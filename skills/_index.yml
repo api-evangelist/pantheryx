@@ -1,0 +1,31 @@
+generated: '2026-08-26'
+method: generated
+source: >-
+  Skills are grounded exclusively in tool names and semantics read from the live tools/list
+  responses at https://relesium.com/api/ucp/mcp and https://www.lifesfirstnaturals.com/api/ucp/mcp
+  (both HTTP 200, 2026-08-26) plus each store's published llms.txt. PanTheryx publishes no skills,
+  no AGENTS.md and no SKILL.md of its own - a search of pantheryx.com, relesium.com and
+  www.lifesfirstnaturals.com found none.
+skills:
+- name: buy-a-relesium-product
+  file: pantheryx-buy-a-relesium-product.md
+  api: Relesium Agentic Commerce (UCP / MCP)
+  endpoint: https://relesium.com/api/ucp/mcp
+  summary: >-
+    Search the Relesium catalog, build a cart, and take a buyer through an approved UCP checkout,
+    with the money-units, agent-profile and buyer-approval rules the store publishes - and an
+    explicit warning that a completed order cannot be reversed through the API.
+  operations:
+  - search_catalog
+  - lookup_catalog
+  - get_product
+  - create_cart
+  - update_cart
+  - get_cart
+  - cancel_cart
+  - create_checkout
+  - update_checkout
+  - get_checkout
+  - complete_checkout
+  - cancel_checkout
+  - get_order

@@ -1,0 +1,46 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  https://relesium.com/.well-known/ucp (200) and https://www.lifesfirstnaturals.com/.well-known/ucp
+  (200) for version negotiation; DNS and HTTP probes of pantheryx.com for a status page and
+  deprecation policy.
+versioning:
+  scheme: dated protocol versions (UCP), negotiated at discovery
+  current: '2026-04-08'
+  supported:
+  - '2026-01-23'
+  - '2026-04-08'
+  negotiation: >-
+    GET /.well-known/ucp returns supported_versions as a map of version to a version-specific
+    profile URL, so a client picks a version it can speak rather than being pinned by the server.
+  in_url: false
+  in_header: false
+  note: >-
+    This is the UCP protocol's version, not a PanTheryx API version. PanTheryx publishes no API of
+    its own and therefore no versioning policy of its own.
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation or sunset policy is published on any PanTheryx host. The previous UCP version
+    (2026-01-23) is still advertised as supported alongside the current one, which is the only
+    deprecation-adjacent signal available, and it comes from the platform.
+status_page:
+  published: false
+  probed:
+  - url: https://status.pantheryx.com
+    result: NXDOMAIN
+  note: >-
+    No status page exists. status.pantheryx.com does not resolve, and no status link appears on
+    pantheryx.com, relesium.com or www.lifesfirstnaturals.com. No StatusPage pointer is emitted.
+sla:
+  published: false
+changelog:
+  api_changelog: false
+  note: >-
+    No API or product changelog is published. The corporate site carries a dated press/news feed at
+    https://pantheryx.com/news-resources/ (RSS at https://pantheryx.com/feed/), which is company
+    news rather than a release log, so no ChangeLog pointer is emitted.
+deprecated_operations: []

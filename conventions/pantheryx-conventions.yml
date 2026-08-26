@@ -1,0 +1,130 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  Derived from the live tools/list responses at https://relesium.com/api/ucp/mcp and
+  https://www.lifesfirstnaturals.com/api/ucp/mcp, the UCP merchant profiles at /.well-known/ucp,
+  and the agent instructions each store publishes at /llms.txt (all HTTP 200 on 2026-08-26).
+scope_note: >-
+  These conventions describe the UCP-over-MCP commerce surface on the two PanTheryx brand
+  storefronts. They are platform conventions supplied by Shopify, not house style authored by
+  PanTheryx, which publishes no API documentation of its own.
+transport:
+  protocol: JSON-RPC 2.0 over MCP
+  content_type: application/json
+  accept: application/json, text/event-stream
+  method_discovery: tools/list
+auth_style:
+  discovery: anonymous - no credential required for tools/list, catalog reads, or /.well-known/ucp
+  customer_context: OAuth 2.0 / OpenID Connect (Shopify customer accounts) - see authentication/
+  payment: >-
+    a payment instrument is supplied on the checkout object; handlers are com.google.pay,
+    dev.shopify.card and dev.shopify.shop_pay
+identifiers:
+  style: Shopify global IDs
+  format: 'gid://shopify/<Type>/<id>'
+  example_documented: 'gid://shopify/Checkout/abc123'
+  source: the id parameter description on get_checkout and update_checkout
+money:
+  representation: integer minor units paired with an ISO 4217 currency code
+  shape: '{"amount": 2500, "currency": "USD"} is $25.00'
+  agent_rule: >-
+    convert to major units before quoting a price to a buyer - divide by 100 for two-decimal
+    currencies; zero-decimal currencies such as JPY are already whole units
+  source: stated in every tool description in tools/list
+agent_profile:
+  required: true
+  field: meta.ucp-agent.profile
+  note: >-
+    Every tool declares meta as a required input carrying a ucp-agent.profile URI for UCP agent
+    profile discovery. An agent that omits it will fail schema validation.
+buyer_context:
+  documented_fields:
+  - context.address_country
+  - context.currency
+  purpose: accurate pricing and availability
+  source: the "Use buyer context" rule in each store's llms.txt
+pagination:
+  documented: false
+  note: >-
+    No pagination convention is documented for search_catalog in the tool descriptions or in
+    llms.txt. Not asserted.
+versioning:
+  style: dated protocol versions negotiated through the UCP merchant profile
+  current: '2026-04-08'
+  supported:
+  - '2026-01-23'
+  - '2026-04-08'
+  discovery: GET /.well-known/ucp
+error_envelope:
+  style: JSON-RPC 2.0 error objects
+  documented_catalog: false
+  note: >-
+    No error-code reference is published. complete_checkout is documented only as returning
+    "any errors encountered". No RFC 9457 problem+json surface exists, so errors/ is not written.
+rate_limit_signaling:
+  documented: true
+  detail: >-
+    "The MCP endpoint is rate-limited per IP. Back off on 429 responses." - published in each
+    store's llms.txt. No numeric limit and no response headers are named. See
+    rate-limits/pantheryx-rate-limits.yml.
+idempotency:
+  supported: unknown
+  grade: na
+  note: >-
+    No idempotency key, header, or retry-safety statement appears in any tool inputSchema, in the
+    UCP merchant profile, or in either store's llms.txt. The pipeline does not assert idempotency
+    that the contract does not state, and no Idempotency pointer is emitted for this provider.
+dry_run_mode:
+  supported: false
+  grade: na
+  note: >-
+    No test mode, sandbox store, simulation flag or dry-run parameter is published. A cart or
+    checkout created against these endpoints is a real cart against the live storefront.
+reversibility:
+  grade: documented
+  rationale: >-
+    Reversal operations exist and are named in the live contract, but no store, policy page or tool
+    description states a window inside which they work - so this is documented, not verified. No
+    window is asserted here, because inventing one could cost a buyer real money.
+  surfaces:
+  - write_operation: create_cart
+    tool: create_cart
+    reversal: cancel_cart
+    window: null
+    window_source: null
+    evidence: >-
+      cancel_cart is present in tools/list on both storefronts with the description "Cancels a
+      cart."
+  - write_operation: create_checkout
+    tool: create_checkout
+    reversal: cancel_checkout
+    window: null
+    window_source: null
+    evidence: >-
+      cancel_checkout is present in tools/list on both storefronts with the description "Cancels a
+      checkout." No documentation states whether it remains available after complete_checkout.
+  - write_operation: complete_checkout
+    tool: complete_checkout
+    reversal: none-in-contract
+    window: null
+    window_source: null
+    evidence: >-
+      There is no refund, void or reverse tool in tools/list. Once complete_checkout succeeds, the
+      only published reversal path is out-of-band: the Relesium refund policy at
+      https://relesium.com/policies/refund-policy (HTTP 200) says only "If you do need to return an
+      order, we're happy to help. Just email us at info@relesium.com and we'll take you through the
+      return process." It states no return window, no eligibility conditions and no cancellation
+      procedure.
+  agent_guidance: >-
+    An agent can safely abandon a cart or an uncompleted checkout through the API. It cannot undo a
+    completed order through the API at all, and it cannot tell a buyer how long they have to return
+    one, because the merchant does not say.
+cross_links:
+  authentication: authentication/pantheryx-authentication.yml
+  scopes: scopes/pantheryx-scopes.yml
+  rate_limits: rate-limits/pantheryx-rate-limits.yml
+  lifecycle: lifecycle/pantheryx-lifecycle.yml
+  conformance: conformance/pantheryx-conformance.yml
+  mcp:
+  - mcp/pantheryx-relesium-mcp.yml
+  - mcp/pantheryx-lifes-first-naturals-mcp.yml

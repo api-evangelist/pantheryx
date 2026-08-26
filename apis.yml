@@ -1,18 +1,89 @@
 aid: pantheryx
 name: PanTheryx
-description: 'PanTheryx is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'PanTheryx, Inc. is a Boulder, Colorado nutrition and biotechnology company, founded in 2007,
+  that commercializes bovine colostrum-based products for human and animal health. Its proprietary
+  ColostrumOne ingredient underpins DiaResQ, a Food for Special Dietary Use for acute infectious
+  diarrhea, alongside the consumer brands Relesium, Life''s First Naturals and TruBiotics (acquired from
+  Bayer HealthCare). PanTheryx sells physical nutrition products and publishes no developer program,
+  OpenAPI, SDK or API reference of any kind; its corporate site is a WordPress marketing and news
+  property. It does, however, operate two Shopify-hosted direct-to-consumer storefronts that expose a
+  live, anonymous agentic-commerce surface: both relesium.com and lifesfirstnaturals.com serve an
+  llms.txt, a Universal Commerce Protocol (UCP) merchant profile at /.well-known/ucp, and a working
+  MCP endpoint at /api/ucp/mcp answering tools/list with 13 catalog, cart, checkout and order tools.'
+image: https://pantheryx.com/wp-content/uploads/2020/08/logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/pantheryx/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment-pass-agentic-commerce-surface
 specificationVersion: '0.20'
 created: '2026-08-26'
 modified: '2026-08-26'
 tags:
 - Company
-apis: []
+- Nutrition
+- Biotechnology
+- Life Sciences
+- Consumer Health
+- Dietary Supplements
+- Colostrum
+- Animal Health
+- Ecommerce
+- Agentic Commerce
+apis:
+- name: Relesium Agentic Commerce (UCP / MCP)
+  description: 'The Relesium direct-to-consumer storefront (a PanTheryx consumer brand, named on
+    pantheryx.com/consumer-brands/) exposes a Universal Commerce Protocol shopping service over MCP.
+    An anonymous POST of tools/list to https://relesium.com/api/ucp/mcp returns 13 tools with full
+    JSON Schema 2020-12 input schemas: search_catalog, lookup_catalog, get_product, create_cart,
+    get_cart, update_cart, cancel_cart, create_checkout, get_checkout, update_checkout,
+    complete_checkout, cancel_checkout and get_order. The surface is provided by the Shopify platform
+    rather than authored by PanTheryx, but it is live, unauthenticated for discovery, and serves the
+    PanTheryx brand catalog.'
+  humanURL: https://relesium.com/
+  baseURL: https://relesium.com/api/ucp/mcp
+  tags:
+  - Agentic Commerce
+  - MCP
+  - Ecommerce
+  - UCP
+  properties:
+  - type: MCPServer
+    url: mcp/pantheryx-relesium-mcp.yml
+  - type: LLMsTxt
+    url: llms/pantheryx-relesium-llms.txt
+  - type: WellKnown
+    url: well-known/pantheryx-relesium-ucp.json
+  - type: TermsOfService
+    url: https://relesium.com/policies/terms-of-service
+  - type: PrivacyPolicy
+    url: https://relesium.com/policies/privacy-policy
+- name: Life's First Naturals Agentic Commerce (UCP / MCP)
+  description: 'The Life''s First Naturals storefront (a PanTheryx consumer brand; its UCP profile
+    resolves to the Shopify shop handle pantheryxlfn.myshopify.com, which confirms PanTheryx
+    ownership) exposes the same Universal Commerce Protocol shopping service over MCP. An anonymous
+    POST of tools/list to https://www.lifesfirstnaturals.com/api/ucp/mcp returns the same 13 catalog,
+    cart, checkout and order tools. Note that the storefront catalog is currently empty:
+    /products.json returned zero products at probe time, so the tools are reachable but have nothing
+    to sell.'
+  humanURL: https://www.lifesfirstnaturals.com/
+  baseURL: https://www.lifesfirstnaturals.com/api/ucp/mcp
+  tags:
+  - Agentic Commerce
+  - MCP
+  - Ecommerce
+  - UCP
+  properties:
+  - type: MCPServer
+    url: mcp/pantheryx-lifes-first-naturals-mcp.yml
+  - type: LLMsTxt
+    url: llms/pantheryx-lifes-first-naturals-llms.txt
+  - type: WellKnown
+    url: well-known/pantheryx-lifes-first-naturals-ucp.json
+  - type: TermsOfService
+    url: https://www.lifesfirstnaturals.com/policies/terms-of-service
+  - type: PrivacyPolicy
+    url: https://www.lifesfirstnaturals.com/policies/privacy-policy
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +91,41 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/pantheryx_stock/
+  url: https://pantheryx.com/
+- type: Blog
+  url: https://pantheryx.com/feed/
+- type: Support
+  url: https://pantheryx.com/contact/
+- type: PrivacyPolicy
+  url: https://pantheryx.com/privacy-policy/
+- type: TermsOfService
+  url: https://pantheryx.com/terms-and-conditions/
+- type: WellKnown
+  url: well-known/pantheryx-well-known.yml
+- type: LLMsTxt
+  url: llms/pantheryx-llms.txt
+- type: MCPServer
+  url: mcp/pantheryx-relesium-mcp.yml
+- type: Conformance
+  url: conformance/pantheryx-conformance.yml
+- type: Authentication
+  url: authentication/pantheryx-authentication.yml
+- type: Conventions
+  url: conventions/pantheryx-conventions.yml
+- type: Lifecycle
+  url: lifecycle/pantheryx-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/pantheryx-rate-limits.yml
+- type: Plans
+  url: plans/pantheryx-plans-pricing.yml
+- type: DomainSecurity
+  url: security/pantheryx-domain-security.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: OAuthScopes
+  url: scopes/pantheryx-scopes.yml
+x-enrichment:
+  date: '2026-08-26'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

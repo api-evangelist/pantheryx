@@ -1,0 +1,80 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  Direct unauthenticated HTTP probes of every host named in apis.yml — the corporate
+  WordPress site pantheryx.com and the two Shopify-hosted PanTheryx consumer-brand
+  storefronts relesium.com and www.lifesfirstnaturals.com.
+note: >-
+  The corporate domain serves no /.well-known/ document at all. Both brand storefronts serve a
+  real Universal Commerce Protocol merchant profile (/.well-known/ucp), an OpenID Connect
+  discovery document, an RFC 8414 OAuth authorization-server document and an RFC 9728
+  OAuth protected-resource document. Those are provided by the Shopify platform rather than
+  authored by PanTheryx, but they are served from PanTheryx-controlled hosts and are live.
+  No security.txt and no api-catalog is served on any host.
+hosts:
+- host: pantheryx.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: relesium.com
+  documents:
+  - path: /.well-known/ucp
+    status: 200
+    file: pantheryx-relesium-ucp.json
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: pantheryx-relesium-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: pantheryx-relesium-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: pantheryx-relesium-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: www.lifesfirstnaturals.com
+  documents:
+  - path: /.well-known/ucp
+    status: 200
+    file: pantheryx-lifes-first-naturals-ucp.json
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: pantheryx-lifes-first-naturals-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: pantheryx-lifes-first-naturals-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: pantheryx-lifes-first-naturals-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: www.trubiotics.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404

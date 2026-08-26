@@ -1,0 +1,27 @@
+generated: '2026-08-26'
+method: searched
+source: https://relesium.com/llms.txt and https://www.lifesfirstnaturals.com/llms.txt (both HTTP 200)
+limit_count: 0
+note: >-
+  Both storefronts publish a rate-limit statement but no number. The exact text is "Respect rate
+  limits. The MCP endpoint is rate-limited per IP. Back off on 429 responses." No quota, window,
+  burst allowance or response header is named anywhere on a PanTheryx host, and no rate-limit
+  headers were observed on the anonymous tools/list responses. limit_count is an honest zero: a
+  policy exists, a measurable limit does not.
+limits: []
+signals:
+- scope: per-ip
+  window: unstated
+  limit: unstated
+  burst: unstated
+  exhaustion_status: 429
+  documented_behavior: back off on 429
+  headers_documented: []
+  headers_observed: []
+  applies_to:
+  - https://relesium.com/api/ucp/mcp
+  - https://www.lifesfirstnaturals.com/api/ucp/mcp
+  source: https://relesium.com/llms.txt
+gaps:
+- No Retry-After, RateLimit-* or X-RateLimit-* header is documented or was observed.
+- No published limit for the anonymous catalog JSON endpoints (/products.json, /collections/*.json).

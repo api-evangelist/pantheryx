@@ -1,0 +1,104 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  Derived from documents fetched live on 2026-08-26: /.well-known/ucp, /.well-known/openid-configuration,
+  /.well-known/oauth-authorization-server and /.well-known/oauth-protected-resource on relesium.com and
+  www.lifesfirstnaturals.com, plus the JSON-RPC tools/list response from each store's /api/ucp/mcp.
+note: >-
+  Every conformance below is asserted from a machine-readable document served on a PanTheryx-controlled
+  host, not from a marketing claim. All of them arrive via the Shopify platform; PanTheryx itself
+  publishes no compliance program, no trust center and no certification page — see the gaps block.
+standards:
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} to https://relesium.com/api/ucp/mcp returned
+    HTTP 200 with a well-formed JSON-RPC 2.0 result containing 13 tools, each with a name, description
+    and inputSchema.
+- id: json-schema-2020-12
+  name: JSON Schema draft 2020-12
+  conforms: true
+  evidence: >-
+    Every tool inputSchema in the tools/list response declares
+    "$schema": "https://json-schema.org/draft/2020-12/schema".
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: >-
+    https://relesium.com/.well-known/openid-configuration returns 200 with issuer,
+    authorization_endpoint, token_endpoint, jwks_uri, response_types_supported and
+    id_token_signing_alg_values_supported (RS256).
+- id: oauth2
+  name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  conforms: true
+  evidence: >-
+    https://relesium.com/.well-known/oauth-authorization-server returns 200 with issuer,
+    token_endpoint, authorization_endpoint, scopes_supported and
+    token_endpoint_auth_methods_supported.
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+  conforms: true
+  evidence: >-
+    https://relesium.com/.well-known/oauth-protected-resource returns 200 with resource,
+    authorization_servers[] and bearer_methods_supported ["header"].
+- id: pkce
+  name: PKCE (RFC 7636)
+  conforms: true
+  evidence: code_challenge_methods_supported includes S256 in both authorization-server documents.
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: >-
+    No HTTP+JSON error surface is published; the MCP transport carries JSON-RPC errors instead. Not
+    applicable rather than failed.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: >-
+    No OpenAPI is published on any PanTheryx host. /openapi.json, /swagger.json and /api-docs all
+    404 on pantheryx.com, relesium.com and www.lifesfirstnaturals.com.
+domain_standards:
+- id: ucp
+  name: Universal Commerce Protocol (UCP)
+  market: agentic commerce / retail checkout
+  conforms: true
+  version: '2026-04-08'
+  supported_versions:
+  - '2026-01-23'
+  - '2026-04-08'
+  evidence: >-
+    https://relesium.com/.well-known/ucp and https://www.lifesfirstnaturals.com/.well-known/ucp each
+    return HTTP 200 with a ucp object declaring version 2026-04-08, a dev.ucp.shopping service bound
+    to transport "mcp", and the capability set dev.ucp.shopping.cart, .checkout, .discount,
+    .fulfillment, .order, .catalog.search, .catalog.lookup plus the dev.shopify.catalog extension.
+    The declaration is in the contract itself, not in prose.
+  spec: https://ucp.dev
+  discovery_documents:
+  - well-known/pantheryx-relesium-ucp.json
+  - well-known/pantheryx-lifes-first-naturals-ucp.json
+  buyer_impact: >-
+    An agent that already speaks UCP can search, cart and check out against these storefronts with
+    no bespoke connector.
+- id: iso4217
+  name: ISO 4217 currency minor units
+  market: commerce pricing
+  conforms: true
+  evidence: >-
+    Every UCP tool description states that prices are integers in the currency's ISO 4217 minor
+    units paired with a currency code.
+- id: iso3166
+  name: ISO 3166-1 alpha-2 country codes
+  market: addressing
+  conforms: true
+  evidence: >-
+    The create_checkout billing_address schema requires address_country "in 2-letter ISO 3166-1
+    alpha-2 format".
+certifications: []
+gaps:
+- >-
+  PanTheryx publishes no trust center, no SOC 2 / ISO 27001 / HIPAA / PCI certification page and no
+  compliance program of its own. probe-security-programs.py returned vdp=none trust=none.
+- >-
+  No security.txt (RFC 9116) is served on pantheryx.com, relesium.com or
+  www.lifesfirstnaturals.com; all three 404.
