@@ -10,6 +10,17 @@ description: 'PanTheryx, Inc. is a Boulder, Colorado nutrition and biotechnology
   live, anonymous agentic-commerce surface: both relesium.com and lifesfirstnaturals.com serve an
   llms.txt, a Universal Commerce Protocol (UCP) merchant profile at /.well-known/ucp, and a working
   MCP endpoint at /api/ucp/mcp answering tools/list with 13 catalog, cart, checkout and order tools.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://pantheryx.com/wp-content/uploads/2020/08/logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/pantheryx/refs/heads/main/apis.yml
 x-type: company
