@@ -39,6 +39,17 @@ tags:
 - Dietary Supplements
 - Colostrum
 - Animal Health
+- E-Commerce
+- Agentic Commerce
+tags_raw:
+- Company
+- Nutrition
+- Biotechnology
+- Life Sciences
+- Consumer Health
+- Dietary Supplements
+- Colostrum
+- Animal Health
 - Ecommerce
 - Agentic Commerce
 apis:
@@ -54,6 +65,11 @@ apis:
   humanURL: https://relesium.com/
   baseURL: https://relesium.com/api/ucp/mcp
   tags:
+  - Agentic Commerce
+  - MCP
+  - E-Commerce
+  - UCP
+  tags_raw:
   - Agentic Commerce
   - MCP
   - Ecommerce
@@ -80,6 +96,11 @@ apis:
   humanURL: https://www.lifesfirstnaturals.com/
   baseURL: https://www.lifesfirstnaturals.com/api/ucp/mcp
   tags:
+  - Agentic Commerce
+  - MCP
+  - E-Commerce
+  - UCP
+  tags_raw:
   - Agentic Commerce
   - MCP
   - Ecommerce
