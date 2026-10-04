@@ -100,6 +100,9 @@ apis:
     url: https://relesium.com/policies/terms-of-service
   - type: PrivacyPolicy
     url: https://relesium.com/policies/privacy-policy
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 - name: Life's First Naturals Agentic Commerce (UCP / MCP)
   description: 'The Life''s First Naturals storefront (a PanTheryx consumer brand; its UCP profile
     resolves to the Shopify shop handle pantheryxlfn.myshopify.com, which confirms PanTheryx
@@ -131,6 +134,9 @@ apis:
     url: https://www.lifesfirstnaturals.com/policies/terms-of-service
   - type: PrivacyPolicy
     url: https://www.lifesfirstnaturals.com/policies/privacy-policy
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
